@@ -8,8 +8,7 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto/';
 import { ORDER_SERVICE } from 'src/config';
 import { ClientProxy } from '@nestjs/microservices';
 
