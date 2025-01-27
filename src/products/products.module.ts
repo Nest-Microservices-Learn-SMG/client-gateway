@@ -1,29 +1,16 @@
 import { Logger, Module } from '@nestjs/common';
 import { ProductsController } from './products.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs, PRODUCT_SERVICE } from 'src/config';
+import { envs } from 'src/config';
+import { NatsModule } from 'src/transports/nats.module';
 
 @Module({
   controllers: [ProductsController],
   providers: [],
-  imports: [
-    ClientsModule.register([
-      {
-        name: PRODUCT_SERVICE,
-        transport: Transport.TCP,
-        options: {
-          host: envs.productsMicroserviceHost,
-          port: envs.productsMicroservicePort,
-        },
-      },
-    ]),
-  ],
+  imports: [NatsModule],
 })
 export class ProductsModule {
   private readonly logger = new Logger(ProductsModule.name);
   constructor() {
-    this.logger.log(
-      `Products Gateway Listening on ${envs.productsMicroserviceHost}:${envs.productsMicroservicePort}`,
-    );
+    this.logger.log(`Nats servers running: ${envs.natsServers.join(', ')}`);
   }
 }
